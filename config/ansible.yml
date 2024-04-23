@@ -1,0 +1,26 @@
+---
+- name: Configure Evil-WinRM
+  hosts: 127.0.0.1
+  become: yes
+  tasks:
+    - name: "Configure Evil-WinRM: replace [provider_sect]"
+      blockinfile:
+        path: /etc/ssl/openssl.cnf
+        marker: "{mark}"
+        marker_begin: "[provider_sect]"
+        marker_end: default = default_sect
+        block: |
+          legacy = legacy_sect
+        state: present
+
+    - name: "Configure Evil-WinRM: replace [default_sect]"
+      blockinfile:
+        path: /etc/ssl/openssl.cnf
+        marker: "{mark}"
+        marker_begin: "[default_sect]"
+        marker_end: "# activate = 1"
+        block: |
+          activate = 1
+          [legacy_sect]
+          activate = 1
+        state: present
