@@ -243,9 +243,6 @@ install_pentest_tools() {
     echo -e "\n  $yellowstar Installing nessus ...\n"
     install_nessus
 
-    echo -e "\n  $yellowstar Installing nosqlmap ...\n"
-    install_nosqlmap
-
     echo -e "\n  $yellowstar Installing burpsuite ...\n"
     install_burpsuite
 
@@ -279,15 +276,6 @@ download_ntlm_theft() {
     # fi
 }
 
-install_nosqlmap() {
-    git clone https://github.com/codingo/NoSQLMap.git /opt/nosqlmap
-    cd /opt/nosqlmap/docker
-    docker-compose build
-    if [ ! "$(cat /etc/bash.bashrc | grep "alias nosqlmap")" ]; then
-        echo 'alias nosqlmap="cd /opt/nosqlmap/docker; docker-compose run nosqlmap; cd -"' >> /etc/bash.bashrc
-    fi
-}
-
 install_nessus() {
     nessus_file=$(curl https://www.tenable.com/downloads/nessus\?loginAttempted\=true | grep -o -m1 -E "Nessus-[0-9]{1,2}.[0-9]{1}.[0-9]{1}-debian10_amd64.deb" | grep -m1 -i ".deb")
     releases_url="https://www.tenable.com/downloads/api/v2/pages/nessus/files/"
@@ -307,7 +295,7 @@ install_wireshark() {
 }
 
 install_burpsuite() {
-    curl "https://portswigger-cdn.net/burp/releases/download?product=community&version=2024.1.1.6&type=Linux" -o /opt/ctftoolkit/tools/install_burpsuite.sh
+    curl "https://portswigger-cdn.net/burp/releases/download?product=community&version=2024.5.5&type=Linux" -o /opt/ctftoolkit/tools/install_burpsuite.sh
     chmod +x /opt/ctftoolkit/tools/install_burpsuite.sh
     /opt/ctftoolkit/tools/install_burpsuite.sh -q
     rm -f /opt/ctftoolkit/tools/install_burpsuite.sh
@@ -422,7 +410,7 @@ install_ghidra() {
     else
         rm -r /opt/ghidra/*
     fi
-    releases_url="https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_11.0.1_build/ghidra_11.0.1_PUBLIC_20240130.zip"
+    releases_url="https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_11.1.2_build/ghidra_11.1.2_PUBLIC_20240709.zip"
     ghidra_file=$(basename "$releases_url")
     echo -e "Downloading $ghidra_file .."
     wget -q $releases_url -O /opt/ghidra/$ghidra_file
