@@ -117,6 +117,9 @@ install_regular_tools() {
     echo -e "\n  $yellowstar Installing curl ...\n"
     apt-get install curl -y
 
+    echo -e "\n  $yellowstar Installing python3-dev ...\n"
+    apt-get install python3-dev -y
+
     echo -e "\n  $yellowstar Installing wireguard ...\n"
     apt-get install wireguard -y
 
@@ -186,11 +189,16 @@ install_pentest_tools() {
     rm msfinstall
 
     echo -e "\n  $yellowstar Installing mitm6 ...\n"
-    apt-get install python3-dev -y
     PIPX_HOME=/opt/pipx PIPX_BIN_DIR=/usr/local/bin pipx install mitm6
 
     echo -e "\n  $yellowstar Installing impacket ...\n"
     PIPX_HOME=/opt/pipx PIPX_BIN_DIR=/usr/local/bin pipx install impacket
+
+    echo -e "\n  $yellowstar Installing coercer ...\n"
+    PIPX_HOME=/opt/pipx PIPX_BIN_DIR=/usr/local/bin pipx install coercer
+
+    echo -e "\n  $yellowstar Installing certipy ...\n"
+    PIPX_HOME=/opt/pipx PIPX_BIN_DIR=/usr/local/bin pipx install certipy-ad
 
     echo -e "\n  $yellowstar Installing hashcat ...\n"
     apt-get install hashcat -y
