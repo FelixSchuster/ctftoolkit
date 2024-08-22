@@ -119,8 +119,7 @@ install_regular_tools() {
     apt-get install curl -y
 
     echo -e "\n  $yellowstar Installing docker compose ...\n"
-    apt-get install docker-compose -y
-    usermod -aG docker $current_user
+    install_docker_compose
 
     echo -e "\n  $yellowstar Installing net-tools ...\n"
     apt-get install net-tools -y
@@ -256,6 +255,19 @@ install_pentest_tools() {
     fix_sudo
 }
 
+install_docker_compose() {
+    apt-get install ca-certificates curl -y
+    install -m 0755 -d /etc/apt/keyrings
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+    chmod a+r /etc/apt/keyrings/docker.asc
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+        $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+        tee /etc/apt/sources.list.d/docker.list > /dev/null
+    apt-get update
+    apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
+    usermod -aG docker $current_user
+}
+
 download_john() {
     # https://github.com/openwall/john/blob/bleeding-jumbo/doc/INSTALL-UBUNTU
     apt-get -y install git build-essential libssl-dev zlib1g-dev 
@@ -307,9 +319,9 @@ install_bloodhound() {
         mkdir /opt/bloodhound
     fi
     curl -L https://ghst.ly/getbhce -o /opt/bloodhound/docker-compose.yaml
-    docker-compose -f /opt/bloodhound/docker-compose.yaml pull
+    docker compose -f /opt/bloodhound/docker-compose.yaml pull
     if [ ! "$(cat /etc/bash.bashrc | grep "alias bloodhound")" ]; then
-        echo 'alias bloodhound="docker-compose -f /opt/bloodhound/docker-compose.yaml up"' >> /etc/bash.bashrc
+        echo 'alias bloodhound="docker compose -f /opt/bloodhound/docker-compose.yaml up"' >> /etc/bash.bashrc
     fi
 }
 
