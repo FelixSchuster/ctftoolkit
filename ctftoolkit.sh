@@ -108,15 +108,27 @@ install_mate_desktop() {
 }
 
 install_regular_tools() {
-    echo -e "\n  $yellowstar Installing openssh-server ...\n"
-    apt-get install openssh-server -y
-    systemctl stop ssh
+    echo -e "\n  $yellowstar Installing git ...\n"
+    apt-get install git -y
 
     echo -e "\n  $yellowstar Installing snap ...\n"
     apt-get install snapd -y
 
     echo -e "\n  $yellowstar Installing curl ...\n"
     apt-get install curl -y
+
+    echo -e "\n  $yellowstar Installing wireguard ...\n"
+    apt-get install wireguard -y
+    apt-get install openresolv -y
+    apt-get install resolvconf -y
+
+    echo -e "\n  $yellowstar Installing openssh-server ...\n"
+    apt-get install openssh-server -y
+    systemctl stop ssh
+    systemctl disable ssh
+
+    echo -e "\n  $yellowstar Installing jq ...\n"
+    apt-get install jq -y
 
     echo -e "\n  $yellowstar Installing docker compose ...\n"
     install_docker_compose
@@ -126,6 +138,9 @@ install_regular_tools() {
 
     echo -e "\n  $yellowstar Installing wireless-tools ...\n"
     apt-get install wireless-tools -y
+
+    echo -e "\n  $yellowstar Installing dos2unix ...\n"
+    apt-get install dos2unix -y
 
     echo -e "\n  $yellowstar Installing visual studio code ...\n"
     snap install code --classic
@@ -167,7 +182,9 @@ install_pentest_tools() {
     apt-get install proxychains -y
 
     echo -e "\n  $yellowstar Installing the metasploit framework ...\n"
-    snap install metasploit-framework
+    curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall
+    chmod 755 msfinstall
+    ./msfinstall
 
     echo -e "\n  $yellowstar Installing mitm6 ...\n"
     apt-get install python3-dev -y
@@ -247,6 +264,12 @@ install_pentest_tools() {
 
     echo -e "\n  $yellowstar Downloading ntlm_theft ...\n"
     download_ntlm_theft
+
+    echo -e "\n  $yellowstar Installing ldapdomaindump ...\n"
+    apt-get install ldapdomaindump -y
+
+    echo -e "\n  $yellowstar Installing ntpdate ...\n"
+    apt-get install ntpdate -y
 
     echo -e "\n  $yellowstar Installing wireshark ...\n"
     install_wireshark
