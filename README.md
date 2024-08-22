@@ -1,7 +1,7 @@
 # ctftoolkit
 
 *ctftoolkit* transforms Ubuntu into a pentesting distribution by installing a few tools I usually use when playing CTFs.
-This script was tested on Ubuntu 22.04.1 LTS.
+This script was tested on Ubuntu 24.04 LTS.
 
 ```
           __    _____  __                .__   __   .__  __

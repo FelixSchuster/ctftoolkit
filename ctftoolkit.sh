@@ -119,8 +119,6 @@ install_regular_tools() {
 
     echo -e "\n  $yellowstar Installing wireguard ...\n"
     apt-get install wireguard -y
-    apt-get install openresolv -y
-    apt-get install resolvconf -y
 
     echo -e "\n  $yellowstar Installing openssh-server ...\n"
     apt-get install openssh-server -y
@@ -185,6 +183,7 @@ install_pentest_tools() {
     curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall
     chmod 755 msfinstall
     ./msfinstall
+    rm msfinstall
 
     echo -e "\n  $yellowstar Installing mitm6 ...\n"
     apt-get install python3-dev -y
@@ -266,7 +265,10 @@ install_pentest_tools() {
     download_ntlm_theft
 
     echo -e "\n  $yellowstar Installing ldapdomaindump ...\n"
-    apt-get install ldapdomaindump -y
+    sudo PIPX_HOME=/opt/pipx PIPX_BIN_DIR=/usr/local/bin pipx install ldapdomaindump
+
+    echo -e "\n  $yellowstar Installing adidnsdump ...\n"
+    sudo PIPX_HOME=/opt/pipx PIPX_BIN_DIR=/usr/local/bin pipx install adidnsdump
 
     echo -e "\n  $yellowstar Installing ntpdate ...\n"
     apt-get install ntpdate -y
@@ -305,7 +307,11 @@ download_john() {
 download_ntlm_theft() {
     git clone https://github.com/Greenwolf/ntlm_theft.git /opt/ntlm_theft
     chmod +x /opt/ntlm_theft/ntlm_theft.py
-    runuser $current_user --command "pip3 install xlsxwriter"
+    cd /opt/ntlm_theft
+    python3 -m venv .venv
+    source .venv/bin/activate
+    pip3 install xlsxwriter
+    deactivate
     # if [ ! "$(cat /etc/bash.bashrc | grep "alias ntlm_theft.py")" ]; then
     #     echo 'alias ntlm_theft.py="python3 /opt/ntlm_theft/ntlm_theft.py"' >> /etc/bash.bashrc
     # fi
@@ -482,9 +488,9 @@ fix_sudo() {
     fi
 }
 
-install_mlocate() {
-    echo -e "\n  $yellowstar Installing mlocate ...\n"
-    apt-get install mlocate -y
+install_plocate() {
+    echo -e "\n  $yellowstar Installing plocate ...\n"
+    apt-get install plocate -y
     updatedb
 }
 
@@ -504,10 +510,10 @@ main() {
     if [ "$install_pentest_tools" = true ]; then
         install_regular_tools
         install_pentest_tools
-        install_mlocate
+        install_plocate
     elif [ "$install_regular_tools" = true ]; then
         install_regular_tools
-        install_mlocate
+        install_plocate
     fi
     if [ "$install_mate" = true ]; then
         install_mate_desktop
