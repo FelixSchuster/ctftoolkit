@@ -1,8 +1,8 @@
 #!/bin/bash
 
-greenplus="\e[1;33m[+]\e[0m"
-yellowstar="\e[1;33m[*]\e[0m"
-redexclaim="\e[1;31m[!]\e[0m"
+redexclaim="\e[1;91m[!]\e[0m"
+greenplus="\e[1;92m[+]\e[0m"
+yellowstar="\e[1;93m[*]\e[0m"
 
 config_file="/opt/ctftoolkit/config/mate.conf"
 
