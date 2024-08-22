@@ -239,7 +239,7 @@ install_pentest_tools() {
     git clone https://github.com/itm4n/PrivescCheck /opt/privesccheck
 
     echo -e "\n  $yellowstar Installing netexec ...\n"
-    PIPX_HOME=/opt/pipx PIPX_BIN_DIR=/usr/local/bin pipx install git+https://github.com/Pennyw0rth/NetExec
+    install_netexec
 
     echo -e "\n  $yellowstar Installing evil-winrm ...\n"
     install_evilwinrm
@@ -423,6 +423,23 @@ install_kerbrute() {
     done
     if [ ! "$(cat /etc/bash.bashrc | grep "alias kerbrute")" ]; then
         echo 'alias kerbrute="/opt/kerbrute/kerbrute_linux_amd64"' >> /etc/bash.bashrc
+    fi
+}
+
+install_netexec() {
+    if [ ! -d /opt/netexec ]; then
+        mkdir /opt/netexec
+    fi
+    releases_url="https://github.com/Pennyw0rth/NetExec/releases/latest/download/"
+    netexec_file='nxc'
+    echo -e "Downloading $netexec_file .."
+    wget -q $releases_url/$netexec_file -O /opt/netexec/$netexec_file
+    chmod +x /opt/netexec/$netexec_file
+    if [ ! "$(cat /etc/bash.bashrc | grep "alias netexec")" ]; then
+        echo 'alias netexec="/opt/netexec/nxc"' >> /etc/bash.bashrc
+    fi
+    if [ ! "$(cat /etc/bash.bashrc | grep "alias nxc")" ]; then
+        echo 'alias nxc="/opt/netexec/nxc"' >> /etc/bash.bashrc
     fi
 }
 
