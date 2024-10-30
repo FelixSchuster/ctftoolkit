@@ -24,6 +24,8 @@ This script was tested on Ubuntu 24.04 LTS.
     -p, --pentest-tools     Install pentest tools and regular tools
 ```
 
+I recently added a script to install the Mate desktop environment on Kali as well. Check the contents of the `kali` folder for further information.
+
 # Setup
 ```
 git clone https://github.com/FelixSchuster/ctftoolkit.git
