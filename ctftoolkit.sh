@@ -275,10 +275,10 @@ install_pentest_tools() {
     download_ntlm_theft
 
     echo -e "\n  $yellowstar Installing ldapdomaindump ...\n"
-    sudo PIPX_HOME=/opt/pipx PIPX_BIN_DIR=/usr/local/bin pipx install ldapdomaindump
+    PIPX_HOME=/opt/pipx PIPX_BIN_DIR=/usr/local/bin pipx install ldapdomaindump
 
     echo -e "\n  $yellowstar Installing adidnsdump ...\n"
-    sudo PIPX_HOME=/opt/pipx PIPX_BIN_DIR=/usr/local/bin pipx install adidnsdump
+    PIPX_HOME=/opt/pipx PIPX_BIN_DIR=/usr/local/bin pipx install adidnsdump
 
     echo -e "\n  $yellowstar Installing ntpdate ...\n"
     apt-get install ntpdate -y
@@ -443,20 +443,9 @@ install_kerbrute() {
 }
 
 install_netexec() {
-    if [ ! -d /opt/netexec ]; then
-        mkdir /opt/netexec
-    fi
-    releases_url="https://github.com/Pennyw0rth/NetExec/releases/latest/download/"
-    netexec_file='nxc'
-    echo -e "Downloading $netexec_file .."
-    wget -q $releases_url/$netexec_file -O /opt/netexec/$netexec_file
-    chmod +x /opt/netexec/$netexec_file
-    if [ ! "$(cat /etc/bash.bashrc | grep "alias netexec")" ]; then
-        echo 'alias netexec="/opt/netexec/nxc"' >> /etc/bash.bashrc
-    fi
-    if [ ! "$(cat /etc/bash.bashrc | grep "alias nxc")" ]; then
-        echo 'alias nxc="/opt/netexec/nxc"' >> /etc/bash.bashrc
-    fi
+    apt-get install build-essential
+    apt-get install python3-dev
+    PIPX_HOME=/opt/pipx PIPX_BIN_DIR=/usr/local/bin pipx install git+https://github.com/Pennyw0rth/NetExec
 }
 
 install_responder() {
