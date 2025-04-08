@@ -118,10 +118,10 @@ install_regular_tools() {
     echo -e "\n  $yellowstar Installing python3-dev ...\n"
     apt-get install python3-dev -y
 
-    echo -e "\n  $yellowstar Installing wireguard ...\n"
+    echo -e "\n  $yellowstar Installing Wireguard ...\n"
     apt-get install wireguard -y
 
-    echo -e "\n  $yellowstar Installing openssh-server ...\n"
+    echo -e "\n  $yellowstar Installing OpenSSH-Server ...\n"
     apt-get install openssh-server -y
     systemctl stop ssh
     systemctl disable ssh
@@ -129,7 +129,7 @@ install_regular_tools() {
     echo -e "\n  $yellowstar Installing jq ...\n"
     apt-get install jq -y
 
-    echo -e "\n  $yellowstar Installing docker compose ...\n"
+    echo -e "\n  $yellowstar Installing Docker Compose ...\n"
     install_docker_compose
 
     echo -e "\n  $yellowstar Installing net-tools ...\n"
@@ -141,7 +141,7 @@ install_regular_tools() {
     echo -e "\n  $yellowstar Installing dos2unix ...\n"
     apt-get install dos2unix -y
 
-    echo -e "\n  $yellowstar Installing visual studio code ...\n"
+    echo -e "\n  $yellowstar Installing Visual Studio Code ...\n"
     snap install code --classic
 }
 
@@ -152,35 +152,35 @@ install_pentest_tools() {
     echo -e "\n  $yellowstar Installing pipx ...\n"
     apt-get install pipx -y
 
-    echo -e "\n  $yellowstar Installing rubygems ...\n"
+    echo -e "\n  $yellowstar Installing Ruby ...\n"
     apt-get install ruby-dev -y
     apt-get install ruby-rubygems -y
 
-    echo -e "\n  $yellowstar Installing ansible ...\n"
+    echo -e "\n  $yellowstar Installing Ansible ...\n"
     apt-get install ansible -y
 
-    echo -e "\n  $yellowstar Installing searchsploit ...\n"
+    echo -e "\n  $yellowstar Installing Searchsploit ...\n"
     snap install searchsploit
 
     echo -e "\n  $yellowstar Installing nmap ...\n"
     apt-get install nmap -y
 
-    echo -e "\n  $yellowstar Installing nikto ...\n"
+    echo -e "\n  $yellowstar Installing Nikto ...\n"
     apt-get install nikto -y
 
-    echo -e "\n  $yellowstar Installing zaproxy ...\n"
+    echo -e "\n  $yellowstar Installing ZAProxy ...\n"
     snap install zaproxy --classic
 
-    echo -e "\n  $yellowstar Installing sqlmap ...\n"
+    echo -e "\n  $yellowstar Installing SQLMap ...\n"
     apt-get install sqlmap -y
 
-    echo -e "\n  $yellowstar Installing smbclient ...\n"
+    echo -e "\n  $yellowstar Installing SMBClient ...\n"
     apt-get install smbclient -y
 
-    echo -e "\n  $yellowstar Installing proxychains ...\n"
+    echo -e "\n  $yellowstar Installing Proxychains ...\n"
     apt-get install proxychains -y
 
-    echo -e "\n  $yellowstar Installing the metasploit framework ...\n"
+    echo -e "\n  $yellowstar Installing the Metasploit Framework ...\n"
     curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall
     chmod 755 msfinstall
     ./msfinstall
@@ -189,19 +189,19 @@ install_pentest_tools() {
     echo -e "\n  $yellowstar Installing mitm6 ...\n"
     PIPX_HOME=/opt/pipx PIPX_BIN_DIR=/usr/local/bin pipx install mitm6
 
-    echo -e "\n  $yellowstar Installing impacket ...\n"
+    echo -e "\n  $yellowstar Installing Impacket ...\n"
     PIPX_HOME=/opt/pipx PIPX_BIN_DIR=/usr/local/bin pipx install impacket
 
-    echo -e "\n  $yellowstar Installing coercer ...\n"
+    echo -e "\n  $yellowstar Installing Coercer ...\n"
     PIPX_HOME=/opt/pipx PIPX_BIN_DIR=/usr/local/bin pipx install coercer
 
-    echo -e "\n  $yellowstar Installing certipy ...\n"
+    echo -e "\n  $yellowstar Installing Certipy ...\n"
     PIPX_HOME=/opt/pipx PIPX_BIN_DIR=/usr/local/bin pipx install certipy-ad
 
-    echo -e "\n  $yellowstar Installing hashcat ...\n"
+    echo -e "\n  $yellowstar Installing Hashcat ...\n"
     apt-get install hashcat -y
 
-    echo -e "\n  $yellowstar Installing aircrack-ng ...\n"
+    echo -e "\n  $yellowstar Installing Aircrack-NG ...\n"
     apt-get install aircrack-ng -y
 
     echo -e "\n  $yellowstar Installing Hydra ...\n"
@@ -228,7 +228,7 @@ install_pentest_tools() {
     echo -e "\n  $yellowstar Installing wfuzz ...\n"
     apt-get install wfuzz -y
 
-    echo -e "\n  $yellowstar Installing wpscan ...\n"
+    echo -e "\n  $yellowstar Installing WPScan ...\n"
     gem install wpscan
 
     echo -e "\n  $yellowstar Installing fcrackzip ...\n"
@@ -237,46 +237,49 @@ install_pentest_tools() {
     echo -e "\n  $yellowstar Installing exiftool ...\n"
     apt-get install libimage-exiftool-perl -y
 
-    echo -e "\n  $yellowstar Downloading john ...\n"
+    echo -e "\n  $yellowstar Downloading John ...\n"
     download_john
 
-    echo -e "\n  $yellowstar Installing bloodhound community edition ...\n"
+    echo -e "\n  $yellowstar Installing Bloodhound Community Edition ...\n"
     install_bloodhound
 
-    echo -e "\n  $yellowstar Dowloading seclists ...\n"
+    echo -e "\n  $yellowstar Dowloading SecLists ...\n"
     download_seclists
 
-    echo -e "\n  $yellowstar Dowloading mimikatz ...\n"
+    echo -e "\n  $yellowstar Dowloading Mimikatz ...\n"
     download_mimikatz
 
-    echo -e "\n  $yellowstar Dowloading peas ...\n"
+    echo -e "\n  $yellowstar Dowloading PEAS ...\n"
     download_peas
 
-    echo -e "\n  $yellowstar Dowloading privesccheck ...\n"
+    echo -e "\n  $yellowstar Dowloading Privesccheck ...\n"
     git clone https://github.com/itm4n/PrivescCheck /opt/privesccheck
 
-    echo -e "\n  $yellowstar Installing netexec ...\n"
+    echo -e "\n  $yellowstar Installing Netexec ...\n"
     install_netexec
 
-    echo -e "\n  $yellowstar Installing evil-winrm ...\n"
+    echo -e "\n  $yellowstar Installing Evil-WinRM ...\n"
     install_evilwinrm
 
-    echo -e "\n  $yellowstar Installing gobuster ...\n"
+    echo -e "\n  $yellowstar Installing Gobuster ...\n"
     install_gobuster
 
-    echo -e "\n  $yellowstar Installing kerbrute ...\n"
+    echo -e "\n  $yellowstar Installing Kerbrute ...\n"
     install_kerbrute
 
-    echo -e "\n  $yellowstar Installing responder ...\n"
+    echo -e "\n  $yellowstar Installing Responder ...\n"
     install_responder
 
-    echo -e "\n  $yellowstar Installing ghidra ...\n"
+    echo -e "\n  $yellowstar Installing Ghidra ...\n"
     install_ghidra
 
-    echo -e "\n  $yellowstar Installing nessus ...\n"
+    echo -e "\n  $yellowstar Installing Nessus ...\n"
     install_nessus
 
-    echo -e "\n  $yellowstar Installing burpsuite ...\n"
+    echo -e "\n  $yellowstar Installing DirBuster ...\n"
+    install_dirbuster
+
+    echo -e "\n  $yellowstar Installing BurpSuit ...\n"
     install_burpsuite
 
     echo -e "\n  $yellowstar Downloading ntlm_theft ...\n"
@@ -285,7 +288,7 @@ install_pentest_tools() {
     echo -e "\n  $yellowstar Installing ldapdomaindump ...\n"
     PIPX_HOME=/opt/pipx PIPX_BIN_DIR=/usr/local/bin pipx install ldapdomaindump
 
-    echo -e "\n  $yellowstar Installing adidnsdump ...\n"
+    echo -e "\n  $yellowstar Installing ADIDNSDump ...\n"
     PIPX_HOME=/opt/pipx PIPX_BIN_DIR=/usr/local/bin pipx install git+https://github.com/dirkjanm/adidnsdump
 
     echo -e "\n  $yellowstar Installing PyWhisker ...\n"
@@ -294,7 +297,7 @@ install_pentest_tools() {
     echo -e "\n  $yellowstar Installing ntpdate ...\n"
     apt-get install ntpdate -y
 
-    echo -e "\n  $yellowstar Installing wireshark ...\n"
+    echo -e "\n  $yellowstar Installing Wireshark ...\n"
     install_wireshark
 
     echo -e "\n  $yellowstar Fixing 'sudo: command not found' errors ...\n"
@@ -373,6 +376,12 @@ install_bloodhound() {
     if [ ! "$(cat /etc/bash.bashrc | grep "alias bloodhound")" ]; then
         echo 'alias bloodhound="docker compose -f /opt/bloodhound/docker-compose.yaml up"' >> /etc/bash.bashrc
     fi
+}
+
+install_dirbuster() {
+    apt-get install openjdk-17-jdk openjdk-17-jre -y
+    git clone https://gitlab.com/kalilinux/packages/dirbuster /opt/dirbuster
+    echo 'alias dirbuster="java -Xmx256M -jar /opt/dirbuster/DirBuster-1.0-RC1.jar >/dev/null 2>&1 &"' >> /etc/bash.bashrc
 }
 
 download_seclists() {
