@@ -93,9 +93,9 @@ Installs/downloads all the regular tools plus:
 - gobuster
 - kerbrute
 - responder
-- ghidra 11.1.2
+- ghidra
 - nessus
-- burpsuite 2024.5.5
+- burpsuite
 - ntlm_theft
 - wireshark
 
