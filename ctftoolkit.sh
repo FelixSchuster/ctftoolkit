@@ -214,6 +214,9 @@ install_pentest_tools() {
     echo -e "\n  $yellowstar Installing cewl ...\n"
     apt-get install cewl -y
 
+    echo -e "\n  $yellowstar Installing ffuf ...\n"
+    apt-get install ffuf -y
+
     echo -e "\n  $yellowstar Installing dnsrecon ...\n"
     apt-get install dnsrecon -y
 
