@@ -374,11 +374,11 @@ install_nessus() {
 }
 
 install_wireshark() {
-    # see https://unix.stackexchange.com/questions/367866/how-to-choose-a-response-for-interactive-prompt-during-installation-from-a-shell/413011#413011
-    echo "wireshark-common wireshark-common/install-setuid boolean true" | sudo debconf-set-selections
     DEBIAN_FRONTEND=noninteractive apt-get -y install wireshark
-    usermod -aG wireshark $USERNAME
-    chown -R $USERNAME /usr/bin/dumpcap
+    # chgrp wireshark /usr/bin/dumpcap
+    setcap cap_net_raw,cap_net_admin+eip /usr/bin/dumpcap
+    # usermod -aG wireshark $USERNAME
+    # chown -R $USERNAME /usr/bin/dumpcap
 }
 
 install_burpsuite() {
