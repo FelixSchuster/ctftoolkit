@@ -14,7 +14,7 @@ install_regular_tools=false
 install_pentest_tools=false
 install_mate=false
 
-current_user=$(who | awk 'NR==1 {print $1}')
+USERNAME=$(who | awk 'NR==1 {print $1}')
 
 display_ascii_art() {
     base64_ascii="ICAgICAgICAgIF9fICAgIF9fX19fICBfXyAgICAgICAgICAgICAgICAuX18gICBfXyAgIC5fXyAgX18KICAgIF9fX19fLyAgfF9f"
@@ -100,7 +100,9 @@ update_system() {
 
 configure_mate() {
     echo -e "\n  $yellowstar Configuring Mate desktop environment...\n"
-    cat /opt/ctftoolkit/templates/mate.conf | dconf load /org/mate/
+    USER_PID=$(pgrep -u $USERNAME -n mate-session)
+    USER_DBUS=$(tr '\0' '\n' < /proc/$USER_PID/environ | grep DBUS_SESSION_BUS_ADDRESS= | sed -e 's/DBUS_SESSION_BUS_ADDRESS=//')
+    sudo -u $USERNAME DBUS_SESSION_BUS_ADDRESS="$USER_DBUS" dconf load /org/mate/ < /opt/ctftoolkit/templates/mate.conf
 }
 
 install_regular_tools() {
@@ -297,7 +299,7 @@ install_docker_compose() {
         tee /etc/apt/sources.list.d/docker.list > /dev/null
     apt-get update
     apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
-    usermod -aG docker $current_user
+    usermod -aG docker $USERNAME
 }
 
 download_john() {
@@ -338,8 +340,8 @@ install_wireshark() {
     apt-get -y install wireshark
     # DEBIAN_FRONTEND=noninteractive apt-get -y install wireshark
     # dpkg-reconfigure wireshark-common
-    usermod -aG wireshark $current_user
-    chown -R $current_user /usr/bin/dumpcap
+    usermod -aG wireshark $USERNAME
+    chown -R $USERNAME /usr/bin/dumpcap
 }
 
 install_burpsuite() {
@@ -501,7 +503,7 @@ fix_opt() {
     echo -e "\n  $yellowstar Updating the permissions of /opt ...\n"
     groupadd opt
     chown -R :opt /opt
-    usermod -aG opt $current_user
+    usermod -aG opt $USERNAME
 }
 
 main() {
@@ -529,3 +531,4 @@ main() {
 }
 
 main "$@"
+
