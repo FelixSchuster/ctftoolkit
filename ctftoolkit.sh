@@ -244,6 +244,12 @@ install_pentest_tools() {
     echo -e "\n  $yellowstar Installing exiftool ...\n"
     apt-get install libimage-exiftool-perl -y
 
+    echo -e "\n  $yellowstar Installing Binwalk ...\n"
+    apt-get install binwalk
+
+    echo -e "\n  $yellowstar Installing Steghide ...\n"
+    apt-get install steghide
+
     echo -e "\n  $yellowstar Downloading John ...\n"
     download_john
 
