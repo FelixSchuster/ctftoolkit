@@ -1,11 +1,5 @@
 #!/bin/bash
 
-# TODO:
-# unattended installation via dpkg-reconfigure for mate and wireshark
-# download printspoofer
-# download juicypotato
-# download ligolo
-
 redexclaim="\e[1;91m[!]\e[0m"
 greenplus="\e[1;92m[+]\e[0m"
 yellowstar="\e[1;93m[*]\e[0m"
@@ -285,6 +279,9 @@ install_pentest_tools() {
     echo -e "\n  $yellowstar Downloading ntlm_theft ...\n"
     download_ntlm_theft
 
+    echo -e "\n  $yellowstar Downloading pkinittools ...\n"
+    download_pkinittools
+
     echo -e "\n  $yellowstar Installing ldapdomaindump ...\n"
     PIPX_HOME=/opt/pipx PIPX_BIN_DIR=/usr/local/bin pipx install ldapdomaindump
 
@@ -318,27 +315,21 @@ install_docker_compose() {
 }
 
 download_john() {
-    # https://github.com/openwall/john/blob/bleeding-jumbo/doc/INSTALL-UBUNTU
+    # see https://github.com/openwall/john/blob/bleeding-jumbo/doc/INSTALL-UBUNTU
     apt-get -y install git build-essential libssl-dev zlib1g-dev 
     git clone https://github.com/openwall/john -b bleeding-jumbo /opt/john
     cd /opt/john/src
     ./configure && make -s clean && make -sj4
-    # if [ ! "$(echo /etc/bash.bashrc | grep '/opt/john/run')" ]; then
-    #     echo 'export PATH="/opt/john/run:$PATH"' >> /etc/bash.bashrc
-    # fi
 }
 
 download_ntlm_theft() {
     git clone https://github.com/Greenwolf/ntlm_theft.git /opt/ntlm_theft
     chmod +x /opt/ntlm_theft/ntlm_theft.py
     cd /opt/ntlm_theft
-    python3 -m venv .venv
-    source .venv/bin/activate
+    python3 -m venv venv
+    source venv/bin/activate
     pip3 install xlsxwriter
     deactivate
-    # if [ ! "$(cat /etc/bash.bashrc | grep "alias ntlm_theft.py")" ]; then
-    #     echo 'alias ntlm_theft.py="python3 /opt/ntlm_theft/ntlm_theft.py"' >> /etc/bash.bashrc
-    # fi
 }
 
 install_nessus() {
@@ -404,11 +395,9 @@ download_seclists() {
 
 download_mimikatz() {
     if [ ! -d /opt/mimikatz ]; then
-        git clone https://github.com/ParrotSec/mimikatz.git /opt/mimikatz
-    else
-        cd /opt/mimikatz
-        git pull
+        mkdir /opt/mimikatz
     fi
+    curl https://github.com/gentilkiwi/mimikatz/releases/download/2.2.0-20220919/mimikatz_trunk.zip -o /opt/mimikatz/mimikatz_trunk.zip
 }
 
 download_peas() {
@@ -431,6 +420,17 @@ download_peas() {
         wget -q $releases_url/$winpeas_file -O /opt/winpeas/$winpeas_file
         chmod +x /opt/winpeas/$winpeas_file
     done
+}
+
+download_pkinittools() {
+    git clone https://github.com/dirkjanm/PKINITtools.git
+    cd PKINITtools/
+    python3 -m venv venv
+    source venv/bin/activate
+    pip install -r requirements.txt
+    # see https://github.com/dirkjanm/PKINITtools/issues/9
+    pip install -I git+https://github.com/wbond/oscrypto.git
+    deactivate
 }
 
 install_evilwinrm() {
