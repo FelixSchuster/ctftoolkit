@@ -204,6 +204,18 @@ install_pentest_tools() {
     echo -e "\n  $yellowstar Installing aircrack-ng ...\n"
     apt-get install aircrack-ng -y
 
+    echo -e "\n  $yellowstar Installing Hydra ...\n"
+    apt-get install hydra -y
+
+    echo -e "\n  $yellowstar Installing rlwrap ...\n"
+    apt-get install rlwrap -y
+
+    echo -e "\n  $yellowstar Installing cewl ...\n"
+    apt-get install cewl -y
+
+    echo -e "\n  $yellowstar Installing dnsrecon ...\n"
+    apt-get install dnsrecon
+
     echo -e "\n  $yellowstar Installing hcxtools ...\n"
     apt-get install hcxtools -y
 
