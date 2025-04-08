@@ -214,7 +214,7 @@ install_pentest_tools() {
     apt-get install cewl -y
 
     echo -e "\n  $yellowstar Installing dnsrecon ...\n"
-    apt-get install dnsrecon
+    apt-get install dnsrecon -y
 
     echo -e "\n  $yellowstar Installing hcxtools ...\n"
     apt-get install hcxtools -y
