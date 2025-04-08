@@ -525,10 +525,11 @@ install_ghidra() {
     else
         rm -r /opt/ghidra/*
     fi
-    releases_url="https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_11.1.2_build/ghidra_11.1.2_PUBLIC_20240709.zip"
+    json=$(curl -s "https://api.github.com/repos/NationalSecurityAgency/ghidra/releases/latest")
+    releases_url=$(echo "$json" | grep -i "browser_download_url" |  awk {'print $2'} | tr -d \")
     ghidra_file=$(basename "$releases_url")
     echo -e "Downloading $ghidra_file .."
-    wget -q $releases_url -O /opt/ghidra/$ghidra_file
+    wget $releases_url -O /opt/ghidra/$ghidra_file
     unzip /opt/ghidra/$ghidra_file -d /opt/ghidra
     rm /opt/ghidra/$ghidra_file
     mv /opt/ghidra/ghidra_*/* /opt/ghidra/
