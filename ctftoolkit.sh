@@ -377,11 +377,9 @@ install_nessus() {
 }
 
 install_wireshark() {
+    # there might be better methods to install wireshark non interactively but this works for now
     DEBIAN_FRONTEND=noninteractive apt-get -y install wireshark
-    # chgrp wireshark /usr/bin/dumpcap
     setcap cap_net_raw,cap_net_admin+eip /usr/bin/dumpcap
-    # usermod -aG wireshark $USERNAME
-    # chown -R $USERNAME /usr/bin/dumpcap
 }
 
 install_burpsuite() {
