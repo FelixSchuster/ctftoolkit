@@ -34,7 +34,7 @@ cd ctftoolkit
 sudo chmod +x ctftoolkit.sh
 sudo ./ctftoolkit.sh
 ```
-Note that `ctftoolkit.sh` relies on resources located in `./tools` and `./config`.
+Note that `ctftoolkit.sh` relies on resources located in `./templates`.
 Ensure to clone the entire repository, as if the script fails to resolve dependencies, it may not function as intended.
 
 # Options
