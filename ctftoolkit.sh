@@ -208,6 +208,9 @@ install_pentest_tools() {
     echo -e "\n  $yellowstar Installing Hydra ...\n"
     apt-get install hydra -y
 
+    echo -e "\n  $yellowstar Installing the Tor Browser ...\n"
+    apt-get install torbrowser-launcher -y
+
     echo -e "\n  $yellowstar Installing rlwrap ...\n"
     apt-get install rlwrap -y
 
