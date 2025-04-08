@@ -273,7 +273,7 @@ install_pentest_tools() {
     echo -e "\n  $yellowstar Installing DirBuster ...\n"
     install_dirbuster
 
-    echo -e "\n  $yellowstar Installing BurpSuit ...\n"
+    echo -e "\n  $yellowstar Installing BurpSuite ...\n"
     install_burpsuite
 
     echo -e "\n  $yellowstar Downloading ntlm_theft ...\n"
