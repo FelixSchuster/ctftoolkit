@@ -98,15 +98,9 @@ update_system() {
     apt-get dist-upgrade -y
 }
 
-install_mate_desktop() {
-    echo -e "\n  $yellowstar Installing the mate desktop environment ...\n"
-    apt-get install ubuntu-mate-desktop -y
-    # DEBIAN_FRONTEND=noninteractive apt-get install ubuntu-mate-desktop -y
-    # dpkg-reconfigure gdm3
-
-    echo -e "\n  $yellowstar Saving the mate desktop environment configuration script ...\n"
-    cp /opt/ctftoolkit/tools/configure_mate.sh /home/$current_user/Desktop/configure_mate.sh
-    chmod +x /home/$current_user/Desktop/configure_mate.sh
+configure_mate() {
+    echo -e "\n  $yellowstar Configuring Mate desktop environment...\n"
+    cat /opt/ctftoolkit/config/mate.conf | dconf load /org/mate/
 }
 
 install_regular_tools() {
@@ -280,6 +274,9 @@ install_pentest_tools() {
     echo -e "\n  $yellowstar Installing adidnsdump ...\n"
     PIPX_HOME=/opt/pipx PIPX_BIN_DIR=/usr/local/bin pipx install adidnsdump
 
+    echo -e "\n  $yellowstar Installing PyWhisker ...\n"
+    PIPX_HOME=/opt/pipx PIPX_BIN_DIR=/usr/local/bin pipx install git+https://github.com/ShutdownRepo/pywhisker
+
     echo -e "\n  $yellowstar Installing ntpdate ...\n"
     apt-get install ntpdate -y
 
@@ -331,9 +328,9 @@ install_nessus() {
     nessus_file=$(curl https://www.tenable.com/downloads/nessus\?loginAttempted\=true | grep -o -m1 -E "Nessus-[0-9]{1,2}.[0-9]{1}.[0-9]{1}-debian10_amd64.deb" | grep -m1 -i ".deb")
     releases_url="https://www.tenable.com/downloads/api/v2/pages/nessus/files/"
 
-    wget -q $releases_url/$nessus_file -O /opt/ctftoolkit/tools/nessus.deb
-    dpkg -i /opt/ctftoolkit/tools/nessus.deb
-    rm -f /opt/ctftoolkit/tools/nessus.deb
+    wget -q $releases_url/$nessus_file -O /opt/ctftoolkit/templates/nessus.deb
+    dpkg -i /opt/ctftoolkit/templates/nessus.deb
+    rm -f /opt/ctftoolkit/templates/nessus.deb
     systemctl enable --now nessusd
 }
 
@@ -346,14 +343,14 @@ install_wireshark() {
 }
 
 install_burpsuite() {
-    curl "https://portswigger-cdn.net/burp/releases/download?product=community&version=2024.5.5&type=Linux" -o /opt/ctftoolkit/tools/install_burpsuite.sh
-    chmod +x /opt/ctftoolkit/tools/install_burpsuite.sh
-    /opt/ctftoolkit/tools/install_burpsuite.sh -q
-    rm -f /opt/ctftoolkit/tools/install_burpsuite.sh
+    curl "https://portswigger-cdn.net/burp/releases/download?product=community&version=2024.5.5&type=Linux" -o /opt/ctftoolkit/templates/install_burpsuite.sh
+    chmod +x /opt/ctftoolkit/templates/install_burpsuite.sh
+    /opt/ctftoolkit/templates/install_burpsuite.sh -q
+    rm -f /opt/ctftoolkit/templates/install_burpsuite.sh
 }
 
 install_bloodhound() {
-    PIPX_HOME=/opt/pipx PIPX_BIN_DIR=/usr/local/bin pipx install bloodhound
+    PIPX_HOME=/opt/pipx PIPX_BIN_DIR=/usr/local/bin pipx install bloodhound-ce
     if [ ! -d /opt/bloodhound ]; then
         mkdir /opt/bloodhound
     fi
@@ -497,7 +494,14 @@ copy_ctftoolkit_to_opt() {
     echo -e "\n  $yellowstar Copying ctftoolkit to /opt/ctftoolkit/ ...\n"
     mkdir /opt/ctftoolkit
     cp -r -v * /opt/ctftoolkit/
-    chmod +x /opt/ctftoolkit/tools/*.sh
+    chmod +x /opt/ctftoolkit/templates/*.sh
+}
+
+fix_opt() {
+    echo -e "\n  $yellowstar Updating the permissions of /opt ...\n"
+    groupadd opt
+    chown -R :opt /opt
+    usermod -aG opt $current_user
 }
 
 main() {
@@ -505,6 +509,10 @@ main() {
     check_root_and_handle_options "$@"
     copy_ctftoolkit_to_opt
     update_system
+
+    if [ "$install_mate" = true ]; then
+        configure_mate
+    fi
 
     if [ "$install_pentest_tools" = true ]; then
         install_regular_tools
@@ -514,12 +522,8 @@ main() {
         install_regular_tools
         install_plocate
     fi
-    if [ "$install_mate" = true ]; then
-        install_mate_desktop
-        echo -e "\n  $redexclaim Reboot and run '/home/$current_user/Desktop/ConfigureMate.sh' to apply the mate configuration\n"
-    else
-        echo -e "\n  $redexclaim Reboot to apply changes\n"
-    fi
+
+    fix_opt
 
     echo -e "\n  $greenplus All done! Happy hacking!\n"
 }
