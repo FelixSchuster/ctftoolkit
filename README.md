@@ -57,7 +57,6 @@ Installs/downloads the following tools:
 - visual studio code
 
 ## -p, --pentest-tools
-**During the installation, you will be prompted whether non-root users should be allowed to capture packages using Wireshark. Select `yes`.**
 
 Installs/downloads all the regular tools plus:
 - pip
