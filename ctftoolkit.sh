@@ -100,7 +100,7 @@ update_system() {
 
 configure_mate() {
     echo -e "\n  $yellowstar Configuring Mate desktop environment...\n"
-    cat /opt/ctftoolkit/config/mate.conf | dconf load /org/mate/
+    cat /opt/ctftoolkit/templates/mate.conf | dconf load /org/mate/
 }
 
 install_regular_tools() {
@@ -409,7 +409,7 @@ install_evilwinrm() {
     gem install evil-winrm
     
     # see https://forum.hackthebox.com/t/evil-winrm-error-on-connection-to-host/257342/18
-    ansible-playbook /opt/ctftoolkit/config/ansible.yml
+    ansible-playbook /opt/ctftoolkit/templates/ansible.yml
 }
 
 install_gobuster() {
