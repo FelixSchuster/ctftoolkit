@@ -594,7 +594,8 @@ main() {
 
     fix_opt
 
-    echo -e "\n  $greenplus All done! Happy hacking!\n"
+    echo -e "\n  $greenplus All done! It is recommended to reboot the machine to apply pending changes.\n"
+    echo -e "\n  $greenplus Happy hacking!\n"
 }
 
 main "$@"
