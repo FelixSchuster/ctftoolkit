@@ -1,7 +1,7 @@
 # ctftoolkit
 
 *ctftoolkit* transforms Ubuntu into a pentesting distribution by installing a few tools I usually use when playing CTFs.
-This script was tested on Ubuntu 24.04 LTS.
+This script was tested on Ubuntu MATE 24.04.2 LTS.
 
 ```
           __    _____  __                .__   __   .__  __
@@ -24,7 +24,8 @@ This script was tested on Ubuntu 24.04 LTS.
     -p, --pentest-tools     Install pentest tools and regular tools
 ```
 
-I recently added a script to install the Mate desktop environment on Kali as well. Check the contents of the `kali` folder for further information.
+I recently added a script to install the Mate desktop environment on Kali as well.
+Check the contents of the `kali` folder for further information.
 
 # Setup
 ```
@@ -39,9 +40,9 @@ Ensure to clone the entire repository, as if the script fails to resolve depende
 # Options
 
 ## -m, --mate
-**During the installation you will be prompted for a default window manager. Select `ligthdm`.**
-
-Installs the Mate desktop environment for Ubuntu and customizes the taskbar as shown below. Adds a script to display IP addresses in the taskbar and enables unlimited scrollback in the terminal. If your network interfaces are named differently, edit the script located in `/opt/ctftoolkit/tools/display_ips.sh`.
+Configures the Mate desktop environment as shown below.
+Adds a script to display IP addresses in the taskbar and enables unlimited scrollback in the terminal
+If your network interfaces are named differently, edit the script located in `/opt/ctftoolkit/templates/display_ips.sh`.
 
 ![Mate Desktop](./img/mate-desktop.png)
 
