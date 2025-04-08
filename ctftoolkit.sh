@@ -376,7 +376,7 @@ install_dirbuster() {
     apt-get install openjdk-17-jdk openjdk-17-jre -y
     git clone https://gitlab.com/kalilinux/packages/dirbuster /opt/dirbuster
     if [ ! "$(cat /etc/bash.bashrc | grep "alias dirbuster")" ]; then
-        echo 'alias dirbuster="java -Xmx256M -jar /opt/dirbuster/DirBuster-1.0-RC1.jar >/dev/null 2>&1 &"' >> /etc/bash.bashrc
+        echo 'alias dirbuster="java -jar /opt/dirbuster/DirBuster-1.0-RC1.jar"' >> /etc/bash.bashrc
     fi
 }
 
