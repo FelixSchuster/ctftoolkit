@@ -1,7 +1,7 @@
 ---
 - name: Configure Evil-WinRM
-  hosts: 127.0.0.1
-  become: yes
+  hosts: localhost
+
   tasks:
     - name: "Configure Evil-WinRM: replace [provider_sect]"
       blockinfile:

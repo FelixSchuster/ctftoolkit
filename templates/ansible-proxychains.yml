@@ -1,0 +1,12 @@
+---
+- name: Update proxychains4 configuration
+  hosts: localhost
+
+  tasks:
+    - name: Update proxychains4 configuration
+      lineinfile:
+        path: /etc/proxychains4.conf
+        regexp: '^socks4\s+127\.0\.0\.1\s+\d+'
+        line: 'socks4 127.0.0.1 1234'
+        insertafter: '^\[ProxyList\]'
+        state: present

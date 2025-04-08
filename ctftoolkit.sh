@@ -172,13 +172,10 @@ install_pentest_tools() {
     apt-get install smbclient -y
 
     echo -e "\n  $yellowstar Installing Proxychains ...\n"
-    apt-get install proxychains -y
+    install_proxychains
 
     echo -e "\n  $yellowstar Installing the Metasploit Framework ...\n"
-    curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall
-    chmod 755 msfinstall
-    ./msfinstall
-    rm msfinstall
+    install_metasploit
 
     echo -e "\n  $yellowstar Installing mitm6 ...\n"
     PIPX_HOME=/opt/pipx PIPX_BIN_DIR=/usr/local/bin pipx install mitm6
@@ -195,7 +192,7 @@ install_pentest_tools() {
     echo -e "\n  $yellowstar Installing Hashcat ...\n"
     apt-get install hashcat -y
 
-    echo -e "\n  $yellowstar Installing Aircrack-NG ...\n"
+    echo -e "\n  $yellowstar Installing aircrack-ng ...\n"
     apt-get install aircrack-ng -y
 
     echo -e "\n  $yellowstar Installing Hydra ...\n"
@@ -285,7 +282,7 @@ install_pentest_tools() {
     echo -e "\n  $yellowstar Installing ldapdomaindump ...\n"
     PIPX_HOME=/opt/pipx PIPX_BIN_DIR=/usr/local/bin pipx install ldapdomaindump
 
-    echo -e "\n  $yellowstar Installing ADIDNSDump ...\n"
+    echo -e "\n  $yellowstar Installing adidnsdump ...\n"
     PIPX_HOME=/opt/pipx PIPX_BIN_DIR=/usr/local/bin pipx install git+https://github.com/dirkjanm/adidnsdump
 
     echo -e "\n  $yellowstar Installing PyWhisker ...\n"
@@ -330,6 +327,18 @@ download_ntlm_theft() {
     source venv/bin/activate
     pip3 install xlsxwriter
     deactivate
+}
+
+install_metasploit() {
+    curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall
+    chmod 755 msfinstall
+    ./msfinstall
+    rm msfinstall
+}
+
+install_proxychains() {
+    apt-get install proxychains4 -y
+    ansible-playbook /opt/ctftoolkit/templates/ansible-proxychains.yml
 }
 
 install_nessus() {
@@ -436,7 +445,7 @@ download_pkinittools() {
 install_evilwinrm() {
     gem install evil-winrm
     # see https://forum.hackthebox.com/t/evil-winrm-error-on-connection-to-host/257342/18
-    ansible-playbook /opt/ctftoolkit/templates/ansible.yml
+    ansible-playbook /opt/ctftoolkit/templates/ansible-winrm.yml
 }
 
 install_gobuster() {
