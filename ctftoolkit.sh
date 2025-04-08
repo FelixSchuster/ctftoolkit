@@ -268,6 +268,9 @@ install_pentest_tools() {
     echo -e "\n  $yellowstar Installing Gobuster ...\n"
     install_gobuster
 
+    echo -e "\n  $yellowstar Installing Gowitness ...\n"
+    go install github.com/sensepost/gowitness@latest
+
     echo -e "\n  $yellowstar Installing Kerbrute ...\n"
     install_kerbrute
 
