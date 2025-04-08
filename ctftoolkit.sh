@@ -298,6 +298,9 @@ install_pentest_tools() {
     echo -e "\n  $yellowstar Installing PyWhisker ...\n"
     PIPX_HOME=/opt/pipx PIPX_BIN_DIR=/usr/local/bin pipx install git+https://github.com/ShutdownRepo/pywhisker
 
+    echo -e "\n  $yellowstar Installing enum4linux-ng ...\n"
+    PIPX_HOME=/opt/pipx PIPX_BIN_DIR=/usr/local/bin pipx install git+https://github.com/cddmp/enum4linux-ng
+
     echo -e "\n  $yellowstar Installing ntpdate ...\n"
     apt-get install ntpdate -y
 
