@@ -343,10 +343,9 @@ install_nessus() {
 }
 
 install_wireshark() {
-    # apt-get -y install wireshark
+    # see https://unix.stackexchange.com/questions/367866/how-to-choose-a-response-for-interactive-prompt-during-installation-from-a-shell/413011#413011
     echo "wireshark-common wireshark-common/install-setuid boolean true" | sudo debconf-set-selections
     DEBIAN_FRONTEND=noninteractive apt-get -y install wireshark
-    # dpkg-reconfigure wireshark-common
     usermod -aG wireshark $USERNAME
     chown -R $USERNAME /usr/bin/dumpcap
 }
@@ -436,7 +435,6 @@ download_pkinittools() {
 
 install_evilwinrm() {
     gem install evil-winrm
-    
     # see https://forum.hackthebox.com/t/evil-winrm-error-on-connection-to-host/257342/18
     ansible-playbook /opt/ctftoolkit/templates/ansible.yml
 }
