@@ -226,6 +226,9 @@ install_pentest_tools() {
     echo -e "\n  $yellowstar Installing enum4linux ...\n"
     snap install enum4linux
 
+    echo -e "\n  $yellowstar Installing Postman ...\n"
+    snap install postman
+
     echo -e "\n  $yellowstar Installing xfreerdp ...\n"
     apt-get install freerdp2-x11 -y
 
