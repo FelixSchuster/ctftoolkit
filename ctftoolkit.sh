@@ -383,7 +383,7 @@ install_wireshark() {
 }
 
 install_burpsuite() {
-    curl "https://portswigger-cdn.net/burp/releases/download?product=community&version=2024.5.5&type=Linux" -o /opt/ctftoolkit/templates/install_burpsuite.sh
+    curl "https://portswigger-cdn.net/burp/releases/download?product=community&type=Linux" -o /opt/ctftoolkit/templates/install_burpsuite.sh
     chmod +x /opt/ctftoolkit/templates/install_burpsuite.sh
     /opt/ctftoolkit/templates/install_burpsuite.sh -q
     rm -f /opt/ctftoolkit/templates/install_burpsuite.sh
