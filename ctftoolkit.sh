@@ -274,7 +274,7 @@ install_pentest_tools() {
     PIPX_HOME=/opt/pipx PIPX_BIN_DIR=/usr/local/bin pipx install ldapdomaindump
 
     echo -e "\n  $yellowstar Installing adidnsdump ...\n"
-    PIPX_HOME=/opt/pipx PIPX_BIN_DIR=/usr/local/bin pipx install adidnsdump
+    PIPX_HOME=/opt/pipx PIPX_BIN_DIR=/usr/local/bin pipx install git+https://github.com/dirkjanm/adidnsdump
 
     echo -e "\n  $yellowstar Installing PyWhisker ...\n"
     PIPX_HOME=/opt/pipx PIPX_BIN_DIR=/usr/local/bin pipx install git+https://github.com/ShutdownRepo/pywhisker
