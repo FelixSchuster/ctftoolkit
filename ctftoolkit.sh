@@ -343,8 +343,9 @@ install_nessus() {
 }
 
 install_wireshark() {
-    apt-get -y install wireshark
-    # DEBIAN_FRONTEND=noninteractive apt-get -y install wireshark
+    # apt-get -y install wireshark
+    echo "wireshark-common wireshark-common/install-setuid boolean true" | sudo debconf-set-selections
+    DEBIAN_FRONTEND=noninteractive apt-get -y install wireshark
     # dpkg-reconfigure wireshark-common
     usermod -aG wireshark $USERNAME
     chown -R $USERNAME /usr/bin/dumpcap
