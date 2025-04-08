@@ -376,12 +376,17 @@ install_bloodhound() {
     if [ ! "$(cat /etc/bash.bashrc | grep "alias bloodhound")" ]; then
         echo 'alias bloodhound="docker compose -f /opt/bloodhound/docker-compose.yaml up"' >> /etc/bash.bashrc
     fi
+    if [ ! "$(cat /etc/bash.bashrc | grep "alias bloodhound-reset")" ]; then
+        echo 'alias bloodhound-reset="docker compose -f /opt/bloodhound/docker-compose.yaml down -v"' >> /etc/bash.bashrc
+    fi
 }
 
 install_dirbuster() {
     apt-get install openjdk-17-jdk openjdk-17-jre -y
     git clone https://gitlab.com/kalilinux/packages/dirbuster /opt/dirbuster
-    echo 'alias dirbuster="java -Xmx256M -jar /opt/dirbuster/DirBuster-1.0-RC1.jar >/dev/null 2>&1 &"' >> /etc/bash.bashrc
+    if [ ! "$(cat /etc/bash.bashrc | grep "alias dirbuster")" ]; then
+        echo 'alias dirbuster="java -Xmx256M -jar /opt/dirbuster/DirBuster-1.0-RC1.jar >/dev/null 2>&1 &"' >> /etc/bash.bashrc
+    fi
 }
 
 download_seclists() {
