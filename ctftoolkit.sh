@@ -94,16 +94,6 @@ update_system() {
 
 configure_mate() {
     echo -e "\n  $yellowstar Configuring MATE Desktop Environment...\n"
-
-    if ! uname -a | grep -qi "ubuntu-mate"; then
-        echo "\n  $redexclaim This configuration might fail since the OS is not Ubuntu MATE."
-        read -rp "Do you want to proceed anyway? (y/n): " choice
-        case "$choice" in
-            y|Y ) echo "Proceeding...";;
-            * ) echo "Aborting."; return 1;;
-        esac
-    fi
-    
     USER_PID=$(pgrep -u $USERNAME -n mate-session)
     USER_DBUS=$(tr '\0' '\n' < /proc/$USER_PID/environ | grep DBUS_SESSION_BUS_ADDRESS= | sed -e 's/DBUS_SESSION_BUS_ADDRESS=//')
     sudo -u $USERNAME DBUS_SESSION_BUS_ADDRESS="$USER_DBUS" dconf load /org/mate/ < /opt/ctftoolkit/templates/mate.conf
