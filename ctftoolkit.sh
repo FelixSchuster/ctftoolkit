@@ -274,7 +274,7 @@ install_pentest_tools() {
     GOBIN=/usr/local/bin go install github.com/sensepost/gowitness@latest
 
     echo -e "\n  $yellowstar Installing Assetfinder ...\n"
-    sudo GOBIN=/usr/local/bin go install github.com/tomnomnom/assetfinder@lates
+    sudo GOBIN=/usr/local/bin go install github.com/tomnomnom/assetfinder@latest
 
     echo -e "\n  $yellowstar Installing Kerbrute ...\n"
     install_kerbrute
