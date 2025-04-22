@@ -159,6 +159,9 @@ install_pentest_tools() {
     echo -e "\n  $yellowstar Installing nmap ...\n"
     apt-get install nmap -y
 
+    echo -e "\n  $yellowstar Installing whois ...\n"
+    apt-get install whois -y
+
     echo -e "\n  $yellowstar Installing Nikto ...\n"
     apt-get install nikto -y
 
