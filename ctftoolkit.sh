@@ -192,6 +192,9 @@ install_pentest_tools() {
     echo -e "\n  $yellowstar Installing Certipy ...\n"
     PIPX_HOME=/opt/pipx PIPX_BIN_DIR=/usr/local/bin pipx install certipy-ad
 
+    echo -e "\n  $yellowstar Installing uploadserver ...\n"
+    PIPX_HOME=/opt/pipx PIPX_BIN_DIR=/usr/local/bin pipx install uploadserver
+
     echo -e "\n  $yellowstar Installing Hashcat ...\n"
     apt-get install hashcat -y
 
