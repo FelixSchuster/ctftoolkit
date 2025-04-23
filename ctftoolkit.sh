@@ -219,6 +219,15 @@ install_pentest_tools() {
     echo -e "\n  $yellowstar Installing dnsrecon ...\n"
     apt-get install dnsrecon -y
 
+    echo -e "\n  $yellowstar Installing wafw00f ...\n"
+    apt-get install wafw00f -y
+
+    echo -e "\n  $yellowstar Installing onesixtyone ...\n"
+    apt-get install onesixtyone -y
+
+    echo -e "\n  $yellowstar Installing braa ...\n"
+    apt-get install braa -y
+
     echo -e "\n  $yellowstar Installing hcxtools ...\n"
     apt-get install hcxtools -y
 
