@@ -195,6 +195,9 @@ install_pentest_tools() {
     echo -e "\n  $yellowstar Installing uploadserver ...\n"
     PIPX_HOME=/opt/pipx PIPX_BIN_DIR=/usr/local/bin pipx install uploadserver
 
+    echo -e "\n  $yellowstar Installing smtp-user-enum ...\n"
+    PIPX_HOME=/opt/pipx PIPX_BIN_DIR=/usr/local/bin pipx install smtp-user-enum
+
     echo -e "\n  $yellowstar Installing Hashcat ...\n"
     apt-get install hashcat -y
 
