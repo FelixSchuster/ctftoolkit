@@ -417,7 +417,7 @@ install_bloodhound() {
     curl -L https://ghst.ly/getbhce -o /opt/bloodhound/docker-compose.yaml
     docker compose -f /opt/bloodhound/docker-compose.yaml pull
     if [ ! "$(cat /etc/bash.bashrc | grep "alias bloodhound")" ]; then
-        echo 'alias bloodhound="docker compose -f /opt/bloodhound/docker-compose.yaml up"' >> /etc/bash.bashrc
+        echo 'alias bloodhound="BLOODHOUND_PORT=8888 docker compose -f /opt/bloodhound/docker-compose.yaml up"' >> /etc/bash.bashrc
     fi
     if [ ! "$(cat /etc/bash.bashrc | grep "alias bloodhound-reset")" ]; then
         echo 'alias bloodhound-reset="docker compose -f /opt/bloodhound/docker-compose.yaml down -v"' >> /etc/bash.bashrc
