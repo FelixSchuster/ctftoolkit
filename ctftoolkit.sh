@@ -137,6 +137,9 @@ install_regular_tools() {
 
     echo -e "\n  $yellowstar Installing Visual Studio Code ...\n"
     snap install code --classic
+
+    echo -e "\n  $yellowstar Re-installing Firefox ...\n"
+    reinstall_firefox
 }
 
 install_pentest_tools() {
@@ -390,8 +393,6 @@ Pin: origin packages.mozilla.org
 Pin-Priority: 1000
 ' | tee /etc/apt/preferences.d/mozilla 
 
-    # Update and install Firefox
-    echo "Updating APT and installing Firefox..."
     apt-get update
     apt-get install firefox -y --allow-downgrades
 }
