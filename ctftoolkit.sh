@@ -391,6 +391,7 @@ Package: *
 Pin: origin packages.mozilla.org
 Pin-Priority: 1000
 ' | tee /etc/apt/preferences.d/mozilla 
+    fi
 
     apt-get update
     apt-get install firefox -y --allow-downgrades
