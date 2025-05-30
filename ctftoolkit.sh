@@ -343,30 +343,57 @@ install_pentest_tools() {
     fix_sudo
 }
 
-# uninstalls the snap version of firefox, installs firefox with apt instead
+# uninstalls the snap version of firefox and re-installs firefox with apt
 # this fixes proxychains not working due to sandboxing
-# TODO: update taskbar link as well
-fix_firefox() {
-    snap remove firefox
+reinstall_firefox() {
+    if snap list | grep -q '^firefox\b'; then
+        echo "Removing Snap-based Firefox..."
+        snap remove firefox
+    fi
+
     install -d -m 0755 /etc/apt/keyrings
-    wget -q https://packages.mozilla.org/apt/repo-signing-key.gpg -O- | tee /etc/apt/keyrings/packages.mozilla.org.asc > /dev/null
-    gpg -n -q --import --import-options import-show /etc/apt/keyrings/packages.mozilla.org.asc | awk '/pub/ {
-        getline
-        gsub(/^ +| +$/, "")
-        if ($0 == "35BAA0B33E9EB396F59CA838C0BA5CE6DC6315A3")
-            print "\nThe key fingerprint matches (" $0 ").\n"
-        else
-            print "\nVerification failed: the fingerprint (" $0 ") does not match the expected one.\n"
-    }'
-    echo "deb [signed-by=/etc/apt/keyrings/packages.mozilla.org.asc] https://packages.mozilla.org/apt mozilla main" | sudo tee -a /etc/apt/sources.list.d/mozilla.list > /dev/null
-    
-    echo '
+
+    KEYRING_FILE="/etc/apt/keyrings/packages.mozilla.org.asc"
+    KEY_FINGERPRINT="35BAA0B33E9EB396F59CA838C0BA5CE6DC6315A3"
+
+    if ! gpg --quiet --with-colons --import-options show-only --import "$KEYRING_FILE" 2>/dev/null | grep -q "$KEY_FINGERPRINT"; then
+        echo "Adding Mozilla APT GPG key..."
+        wget -q https://packages.mozilla.org/apt/repo-signing-key.gpg -O- | tee "$KEYRING_FILE" > /dev/null
+        gpg -n -q --import --import-options import-show "$KEYRING_FILE" \
+            | awk '/pub/ {
+                getline
+                gsub(/^ +| +$/, "")
+                if ($0 == "'"$KEY_FINGERPRINT"'")
+                    print "\nThe key fingerprint matches (" $0 ").\n"
+                else
+                    print "\nVerification failed: the fingerprint (" $0 ") does not match the expected one.\n"
+            }'
+    else
+        echo "Mozilla APT GPG key already present and verified."
+    fi
+
+    REPO_LINE="deb [signed-by=$KEYRING_FILE] https://packages.mozilla.org/apt mozilla main"
+    REPO_FILE="/etc/apt/sources.list.d/mozilla.list"
+    if ! grep -Fxq "$REPO_LINE" "$REPO_FILE" 2>/dev/null; then
+        echo "Adding Mozilla APT repository..."
+        echo "$REPO_LINE" | tee -a "$REPO_FILE" > /dev/null
+    else
+        echo "Mozilla APT repository already present."
+    fi
+
+    PREF_FILE="/etc/apt/preferences.d/mozilla"
+    if [ ! -f "$PREF_FILE" ]; then
+        echo "Adding APT pinning preferences for Mozilla..."
+        echo '
 Package: *
 Pin: origin packages.mozilla.org
 Pin-Priority: 1000
-' | tee /etc/apt/preferences.d/mozilla
+' | tee /etc/apt/preferences.d/mozilla 
 
-    apt-get update && apt-get install firefox
+    # Update and install Firefox
+    echo "Updating APT and installing Firefox..."
+    apt-get update
+    apt-get install firefox -y --allow-downgrades
 }
 
 install_docker_compose() {
