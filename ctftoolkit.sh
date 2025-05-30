@@ -20,7 +20,6 @@ display_ascii_art() {
     echo ""
     echo $base64_ascii | base64 -d
     echo ""
-    echo "  Version: 1.0.0 - 2024/03/24"
     echo "  GitHub: github.com/FelixSchuster"
     echo ""
 }
