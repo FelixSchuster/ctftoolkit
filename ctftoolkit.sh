@@ -602,11 +602,11 @@ install_responder() {
 }
 
 install_ghidra() {
-    apt-get install openjdk-17-jdk -y
+    apt-get install openjdk-21-jdk -y
     if [ ! -d /opt/ghidra ]; then
         mkdir /opt/ghidra
     else
-        rm -r /opt/ghidra/*
+        rm -r /opt/ghidra
     fi
     json=$(curl -s "https://api.github.com/repos/NationalSecurityAgency/ghidra/releases/latest")
     releases_url=$(echo "$json" | grep -i "browser_download_url" |  awk {'print $2'} | tr -d \")
