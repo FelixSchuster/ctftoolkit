@@ -240,7 +240,7 @@ install_pentest_tools() {
     snap install enum4linux
 
     echo -e "\n  $yellowstar Installing Postman ...\n"
-    snap install postman
+    install_postman
 
     echo -e "\n  $yellowstar Installing xfreerdp ...\n"
     apt-get install freerdp2-x11 -y
@@ -395,6 +395,17 @@ Pin-Priority: 1000
 
     apt-get update
     apt-get install firefox -y --allow-downgrades
+}
+
+install_postman() {
+    if [ ! -d /opt/postman ]; then
+        mkdir /opt/postman
+    fi
+    curl https://dl.pstmn.io/download/latest/linux_64 -o /opt/postman/postman.tar.gz
+    tar -xvf /opt/postman/postman.tar.gz -C /opt/postman
+    if [ ! "$(cat /etc/bash.bashrc | grep "alias postman")" ]; then
+        echo 'alias postman="/opt/postman/Postman/Postman"' >> /etc/bash.bashrc
+    fi
 }
 
 install_docker_compose() {
