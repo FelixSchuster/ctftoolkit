@@ -139,6 +139,9 @@ install_regular_tools() {
 
     echo -e "\n  $yellowstar Re-installing Firefox ...\n"
     reinstall_firefox
+
+    echo -e "\n  $yellowstar Installing Google-Chrome ...\n"
+    install_chrome
 }
 
 install_pentest_tools() {
@@ -395,6 +398,12 @@ Pin-Priority: 1000
 
     apt-get update
     apt-get install firefox -y --allow-downgrades
+}
+
+install_chrome() {
+    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    dpkg -i google-chrome-stable_current_amd64.deb
+    rm google-chrome-stable_current_amd64.deb
 }
 
 install_postman() {
